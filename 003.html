@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-extras.controls@3.3.0/dist/aframe-extras.controls.min.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <!-- Camera with movement controls -->
+      <a-entity id="rig" position="0 1.6 0">
+        <a-camera>
+          <a-cursor></a-cursor>
+        </a-camera>
+        <a-entity
+          movement-controls="fly: true"
+          position="0 0 0"
+          rotation="0 0 0"
+        ></a-entity>
+      </a-entity>
+
+      <!-- Ground plane -->
+      <a-plane
+        src="https://cdn.aframe.io/a-painter/images/floor.jpg"
+        rotation="-90 0 0"
+        width="20"
+        height="20"
+      ></a-plane>
+
+      <!-- Simple box to click and navigate to -->
+      <a-box
+        color="tomato"
+        position="0 1 -5"
+        scale="2 2 2"
+        cursor-listener
+        navigate-on-click="target: #rig"
+      ></a-box>
+    </a-scene>
+  </body>
+</html>

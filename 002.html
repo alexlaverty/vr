@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>VR Room with Window and Sky</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+</head>
+<body>
+    <a-scene vr-mode-ui="enabled: false">
+
+        <!-- Sky entity (skybox with clouds) -->
+        <a-sky src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/sechelt.jpg"></a-sky>
+
+        <!-- Room entity -->
+        <a-entity id="room" position="0 2 -4">
+            <!-- Walls and ceiling -->
+            <a-box position="0 2 -2" width="8" height="4" depth="0.1" color="#fffacd"></a-box>
+            <a-box position="0 2 -6" width="8" height="4" depth="0.1" color="#fffacd"></a-box>
+            <a-box position="4 2 -4" rotation="0 90 0" width="4" height="4" depth="0.1" color="#fffacd"></a-box>
+            <a-box position="-4 2 -4" rotation="0 90 0" width="4" height="4" depth="0.1" color="#fffacd"></a-box>
+            <a-box position="0 4 -4" rotation="90 0 0" width="8" height="8" depth="0.1" color="#fffacd"></a-box>
+
+            <!-- Window entity -->
+            <a-entity id="window" position="0 3 -6">
+                <!-- Window frame -->
+                <a-box position="0 0 0" width="6" height="3" depth="0.1" color="#654321"></a-box>
+                <!-- Glass panel -->
+                <a-plane position="0 0.01 0.05" width="5.8" height="2.8" color="#acf" material="opacity: 0.7;"></a-plane>
+            </a-entity>
+
+            <!-- Tree entity outside the window -->
+            <a-entity id="tree" position="0 0 -10">
+                <a-cylinder position="0 0 0" radius="1" height="6" color="#468966"></a-cylinder>
+                <a-sphere position="0 6 0" radius="2" color="#77b58a"></a-sphere>
+            </a-entity>
+        </a-entity>
+
+        <!-- Camera entity -->
+        <a-entity camera look-controls position="0 2 0"></a-entity>
+    </a-scene>
+</body>
+</html>

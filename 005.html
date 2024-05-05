@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Teleportation in A-Frame for Oculus Quest</title>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://unpkg.com/aframe-extras.controls@3.3.0/dist/aframe-extras.controls.min.js"></script>
+</head>
+<body>
+  <a-scene>
+    <!-- Camera with Oculus Quest teleport controls -->
+    <a-entity id="rig" position="0 1.6 0">
+      <a-camera>
+        <a-cursor></a-cursor>
+      </a-camera>
+      <a-entity
+        oculus-quest-controls
+        movement-controls="fly: true"
+        position="0 0 0"
+        rotation="0 0 0"
+      ></a-entity>
+    </a-entity>
+
+    <!-- Ground plane -->
+    <a-plane
+      src="https://cdn.aframe.io/a-painter/images/floor.jpg"
+      rotation="-90 0 0"
+      width="20"
+      height="20"
+    ></a-plane>
+
+    <!-- Simple box to teleport to when clicked -->
+    <a-box
+      color="tomato"
+      position="0 1 -5"
+      scale="2 2 2"
+      cursor-listener
+      navigate-on-click="target: #rig"
+    ></a-box>
+  </a-scene>
+
+  <script>
+    AFRAME.registerComponent('oculus-quest-controls', {
+      init: function () {
+        const self = this;
+        const { sceneEl } = this.el;
+
+        // Register the teleport-controls component for Oculus Quest
+        sceneEl.systems['tracked-controls-webxr'].registerComponent('oculus-touch', {
+          schema: AFRAME.utils.extend({}, AFRAME.components['oculus-touch'].schema, {
+            hand: { default: 'left' },
+            button: { default: 'trigger' },
+            model: { default: false }
+          }),
+
+          onButtonChanged: function (evt) {
+            const button = this.data.button;
+            const isPressed = evt.detail.state === 'pressed';
+            if (button === 'trigger' && isPressed) {
+              self.el.setAttribute('teleport-controls', {
+                type: 'parabolic',
+                button: 'trigger',
+                collisionEntities: '#rig',
+                cameraRig: '#rig'
+              });
+            }
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>
